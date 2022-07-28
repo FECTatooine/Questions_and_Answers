@@ -1,6 +1,3 @@
-psql questions_and_answers;
-
-
 CREATE TABLE IF NOT EXISTS questions(
   question_id bigserial PRIMARY KEY,
   product_id bigserial,
