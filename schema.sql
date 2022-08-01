@@ -12,12 +12,12 @@ CREATE TABLE IF NOT EXISTS questions(
 CREATE TABLE IF NOT EXISTS answers(
   answer_id bigserial PRIMARY KEY,
   question_id bigint,
-  question_body varchar,
-  question_date bigint,
+  answer_body varchar,
+  answer_date bigint,
   answerer_name varchar,
   answerer_email varchar,
   reported BOOLEAN,
-  question_helpfulness INTEGER,
+  answer_helpfulness INTEGER,
   FOREIGN KEY(question_id)
 	  REFERENCES questions(question_id)
 );

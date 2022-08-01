@@ -1,6 +1,6 @@
 // Import External Modules
 require('dotenv').config();
-const { Sequelize, Model, DataTypes } = require('sequelize');
+const { Sequelize, Model, DataTypes, QueryTypes } = require('sequelize');
 
 // Create variables
 const user = process.env.user;
@@ -11,9 +11,10 @@ const port = process.env.port;
 
 // Initialize new sequelize object instance
 const sequelize = new Sequelize(database, user, password, {
-  host,
-  port,
-  dialect: 'postgres',
+  host: host,
+  port: port,
+  dialect: 'postgresql',
+  operatorAliases: false,
   logging: false,
 });
 
@@ -21,7 +22,7 @@ const sequelize = new Sequelize(database, user, password, {
 const connection = async () => {
   try {
     await sequelize.authenticate();
-    console.log('Connection has been established successfully.');
+    console.log('Database connection has been established successfully.');
   } catch (error) {
     console.error('Unable to connect to the database:', error);
   }
@@ -29,90 +30,30 @@ const connection = async () => {
 
 connection(); // Tests DB Connection
 
-// Create new Models
-const Questions = new Model(); // fix schema based on docs
-const Answers = new Model();
-
-// Create new schema
-questions.init({
-  question_id: {
-    type: DataTypes.BIGSERIAL,
-    autoIncrement: true,
-    primaryKey: true,
-  },
-  product_id: {
-    type: DataTypes.BIGINT,
+const getQuery = async (table, productId) => {
+  if (productId) {
+    try {
+      console.log('got here');
+      return await sequelize.query(
+        `SELECT * FROM '${table}' WHERE product_id = ${productId}`,
+        { type: QueryTypes.SELECT }
+      );
+    } catch (err) {
+      console.log(err);
+    }
+  } else {
+    try {
+      return await sequelize.query(`SELECT * FROM '${table}'`, {
+        type: QueryTypes.SELECT,
+      });
+    } catch (err) {
+      console.log(err);
+    }
   }
-  question_body: {
-    type: DataTypes.VARCHAR,
-  },
-  question_date: {
-    type: DataTypes.BIGINT,
-  },
-  asker_name: {
-    type: DataTypes.VARCHAR,
-  },
-  asker_email: {
-    type: DataTypes.VARCHAR,
-  },
-  reported: {
-    type: DataTypes.BOOLEAN,
-  },
-  question_helpfulness: {
-    type: INTEGER,
-  },
-});
+};
 
-answers.init({
-  answer_id: {
-    type: DataTypes.BIGSERIAL,
-    autoIncrement: true,
-    primaryKey: true,
-  },
-  question_id: {
-    type: DataTypes.BIGINT,
-  },
-  question_body: {
-    type: DataTypes.VARCHAR,
-  },
-  question_date: {
-    type: DataTypes.BIGINT,
-  },
-  answerer_name: {
-    type: DataTypes.VARCHAR,
-  },
-  answerer_email: {
-    type: DataTypes.VARCHAR,
-  },
-  reported: {
-    type: DataTypes.BOOLEAN,
-  },
-  question_helpfulness: {
-    type: DataTypes.INTEGER,
-  },
-});
-
-answer_photos.init({
-  photo_id: {
-    type: DataTypes.BIGSERIAL,
-    autoIncrement: true,
-    primaryKey: true,
-  },
-  answer_id: {
-    type: DataTypes.BIGINT,
-  },
-  url: {
-    type: DataTypes.VARCHAR,
-  },
-})
-
-// Add Foreign Keys
-answers.belongsTo(questions, {
-  foreignKey: 'question_id',
-  targetKey: 'question_id',
-});
-
-answer_photos.belongsTo(answers, {
-  foreignKey: 'answer_id',
-  targetKey: 'answer_id',
-});
+module.exports = {
+  sequelize,
+  Sequelize,
+  getQuery,
+};
