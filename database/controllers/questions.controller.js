@@ -5,13 +5,13 @@ const Op = db.Sequelize.Op;
 // Create and Save a new Question
 exports.create = (req, res) => {
   // Validate request
-  if (!req.body.title) {
-    res.status(400).send({
-      message: 'Content can not be empty!',
-    });
-    return;
-  }
-  // Create a Question
+  // if (!req.body.title) {
+  //   res.status(400).send({
+  //     message: 'Content can not be empty!',
+  //   });
+  //   return;
+  // }
+  // Create a Question // maybe look at the schema here to confirm
   const question = {
     product_id: req.body.product_id,
     question_body: req.body.question_body,
@@ -32,16 +32,42 @@ exports.create = (req, res) => {
     });
 };
 
-// Retrieve all Questions from the database.
+// Retrieve all Questions from the database for a specific product
 exports.findAll = (req, res) => {
   const productId = req.query.product_id;
   var condition = productId
-    ? { productId: { product_id: `%${product_id}%` } }
+    ? { productId: { product_id: `%${productId}%` } }
     : null;
   sequelize
-    .query('SELECT * FROM questions WHERE product_id = 2')
+    .query(
+      `SELECT row_to_json(questions)
+    FROM (
+      SELECT
+      *,
+      (
+        SELECT jsonb_agg(answers)
+        FROM (
+        SELECT
+          *,
+          (
+            SELECT jsonb_agg(answer_photos)
+            FROM (
+            SELECT
+              *
+              FROM answer_photos
+              WHERE answers.answer_id = answer_id
+            ) as answer_photos
+          ) as answer_photos
+          FROM answers
+          WHERE questions.question_id = question_id
+        ) as answers
+      ) as answers
+        FROM questions
+      WHERE product_id = ${productId}
+    ) as questions`
+    )
     .then((data) => {
-      console.log(JSON.stringify(data));
+      console.log(data);
       res.send(data);
     })
     .catch((err) => {
@@ -52,33 +78,5 @@ exports.findAll = (req, res) => {
     });
 };
 
-// Find a single Question with an id
-exports.findOne = (req, res) => {
-  console.log('help');
-  const id = req.params.id;
-  Questions.findOne({ where: { product_id: '2' } })
-    .then((data) => {
-      if (data) {
-        res.send(data);
-      } else {
-        res.status(404).send({
-          message: `Cannot find Question with id=${id}.`,
-        });
-      }
-    })
-    .catch((err) => {
-      res.status(500).send({
-        message: 'Error retrieving Question with id=' + id,
-      });
-    });
-};
-
-// Update a Question by the id in the request
-exports.update = (req, res) => {};
-
-// Delete a Question with the specified id in the request
-exports.delete = (req, res) => {};
-// Delete all Questions from the database.
-exports.deleteAll = (req, res) => {};
-// Find all published Questions
-exports.findAllPublished = (req, res) => {};
+// Updates Helpfullness of a Question
+exports.helpful = (req, res) => {};

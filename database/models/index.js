@@ -41,7 +41,7 @@ Object.keys(db).forEach((modelName) => {
 });
 
 // Create new Models
-const Questions = sequelize.define('questions', {
+const Questions = sequelize.define('Questions', {
   question_id: {
     type: DataTypes.BIGINT,
     autoIncrement: true,
@@ -68,9 +68,10 @@ const Questions = sequelize.define('questions', {
   question_helpfulness: {
     type: DataTypes.INTEGER,
   },
+  tableName: 'questions',
 });
 
-const Answers = sequelize.define('answers', {
+const Answers = sequelize.define('Answers', {
   answer_id: {
     type: DataTypes.BIGINT,
     autoIncrement: true,
@@ -97,9 +98,10 @@ const Answers = sequelize.define('answers', {
   question_helpfulness: {
     type: DataTypes.INTEGER,
   },
+  tableName: 'answers',
 });
 
-const AnswerPhotos = sequelize.define('answer_photos', {
+const AnswerPhotos = sequelize.define('AnswerPhotos', {
   photo_id: {
     type: DataTypes.BIGINT,
     autoIncrement: true,
@@ -111,6 +113,7 @@ const AnswerPhotos = sequelize.define('answer_photos', {
   url: {
     type: DataTypes.STRING,
   },
+  tableName: 'answer_photos',
 });
 
 // Add Foreign Keys

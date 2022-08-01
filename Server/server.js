@@ -40,19 +40,10 @@ app.use((req, res, next) => {
 require('./questions.routes')(app);
 app.listen(port, () => console.log(`Listening at http://localhost:${port}`));
 
-// Routes
-
-// Get
+// Default Route
 app.get('/', (req, res) => {
   res.json({
     message:
       'Hello from the friendly API server,  this route doesnt do anything but we are happy you are here!',
   });
 });
-
-// app.get('/questions', (req, res) => {});
-// app.get('/answers', (req, res) => {});
-
-// // Post
-// app.post('/questions', (req, res) => {});
-// app.post('/answers', (req, res) => {});
