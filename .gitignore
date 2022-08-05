@@ -3,3 +3,5 @@ Assets (untracked)
 node_modules
 .DS_Store
 Assets
+*.pem
+Diagarm.excalidraw

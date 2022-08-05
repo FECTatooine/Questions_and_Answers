@@ -38,6 +38,7 @@ app.use((req, res, next) => {
 
 // Initialize Server
 require('./questions.routes')(app);
+require('./answers.routes')(app);
 app.listen(port, () => console.log(`Listening at http://localhost:${port}`));
 
 // Default Route

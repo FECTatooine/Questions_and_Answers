@@ -1,6 +1,8 @@
+––DROP TABLE questions, answers, answer_photos
+
 CREATE TABLE IF NOT EXISTS questions(
-  question_id bigserial PRIMARY KEY,
-  product_id bigserial,
+  question_id bigserial PRIMARY KEY NOT NULL,
+  product_id bigInt,
   question_body varchar,
   question_date bigint,
   asker_name varchar,
@@ -10,7 +12,7 @@ CREATE TABLE IF NOT EXISTS questions(
 );
 
 CREATE TABLE IF NOT EXISTS answers(
-  answer_id bigserial PRIMARY KEY,
+  answer_id bigserial PRIMARY KEY NOT NULL,
   question_id bigint,
   answer_body varchar,
   answer_date bigint,
@@ -23,7 +25,7 @@ CREATE TABLE IF NOT EXISTS answers(
 );
 
 CREATE TABLE IF NOT EXISTS answer_photos(
-photo_id bigserial PRIMARY KEY,
+photo_id bigserial PRIMARY KEY NOT NULL,
 answer_id bigint,
 url varchar,
 FOREIGN KEY(answer_id)
