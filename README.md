@@ -75,8 +75,6 @@ The following scripts can be found in package.json
             </sub>
         </a>
         <br /><br>
-        <a href="https://github.com/TitanInSpirit/Project_Atelier/pulls?q=is%3Apr+is%3Aclosed+author%3ASymphon-y" title="Commits">💻</a> &nbsp;
-        <a href="https://github.com/TitanInSpirit/Project_Atelier/tree/main/src/components/overview" title="Component">📖</a> &nbsp;
     </td>
 <table>
 </div>
