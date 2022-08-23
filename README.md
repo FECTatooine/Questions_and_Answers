@@ -12,12 +12,10 @@ Previously our team was tasked with creating a complete redesign of an outdated 
 <hr style="background-color: #5c5c5c;height: 2.0px;"/>
 
 <p align="center">
-<a href="#overview" style="color:'white'">Overview</a> |
-<a href="#questions--answers" style="color:'white'">Questions & Answers</a> |
-<a href="#ratings--reviews" style="color:'white'">Ratings & Reviews</a> |
-<a href="#-installation-" style="color:'white'">Installation</a> |
-<a href="#-git-work-flow-" style="color:'white'">Git Work Flow</a> |
-<a href="#-testing-" style="color:'white'">Testing</a>
+<a href="#-overview-" style="color:'white'">Overview</a> |
+<a href="#-results-" style="color:'white'">Results</a> |
+<a href="#-scripts-" style="color:'white'">Scripts</a> |
+<a href="#-contributors-" style="color:'white'">Contributors</a>
 </p>
 
 <hr style="background-color: #5c5c5c;height: 2.0px;"/>
